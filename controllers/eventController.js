@@ -1,6 +1,35 @@
 import Event from '../models/eventModel.js';
 import QRCode from 'qrcode'; // we will use this for QR generation later
 
+
+//create an event
+export const addEvent = async (req, res) => {
+  try {
+    const { title, description, date, location } = req.body;
+
+    if (!title || !description || !date || !location) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
+    // `req.user._id` comes from your auth middleware
+    const newEvent = await Event.create({
+      organiser: req.user._id,
+      title,
+      description,
+      date,
+      location,
+    });
+
+    res.status(201).json({
+      message: "Event created successfully",
+      event: newEvent,
+    });
+  } catch (error) {
+    console.error("Error adding event:", error);
+    res.status(500).json({ message: "Server error while adding event" });
+  }
+};
+
 // Register for an event
 export const registerForEvent = async (req, res) => {
   try {
