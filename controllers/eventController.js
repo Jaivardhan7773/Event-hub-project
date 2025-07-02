@@ -1,4 +1,5 @@
 import Event from '../models/eventModel.js';
+import jwt from 'jsonwebtoken';
 import QRCode from 'qrcode'; // we will use this for QR generation later
 
 
@@ -57,12 +58,20 @@ export const registerForEvent = async (req, res) => {
     await event.save();
 
     // Generate QR Code (for now return a dummy string, integrate QR later)
-    const qrCodeData = `EventID:${eventId}-UserID:${userId}`;
-    const qrCodeImage = await QRCode.toDataURL(qrCodeData);
+   const payload = {
+      eventId: eventId,
+      userId: userId
+    };
+
+    const qrToken = jwt.sign(payload, process.env.JWT_SECRET); // no expiresIn
+
+    // Generate QR Code with this token
+    const qrCodeImage = await QRCode.toDataURL(qrToken);
 
     res.status(200).json({
       message: "Registered successfully",
-      qrCode: qrCodeImage
+      qrCode: qrCodeImage,
+      token: qrToken // optional: if you want to see the raw token
     });
   } catch (error) {
     console.log("Error in registerForEvent:", error);

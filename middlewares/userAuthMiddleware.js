@@ -37,3 +37,12 @@ export const userAuthMiddleware = async (req, res, next) => {
         });
     }
 }
+
+export const organiserOnly = (req, res, next) => {
+  if (req.user && req.user.role === "organiser") {
+    next();
+  } else {
+    res.status(401).json({ message: "Not authorised as organiser" });
+  }
+};
+
