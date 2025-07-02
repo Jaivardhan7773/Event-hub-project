@@ -1,6 +1,7 @@
 import express from 'express';
 import { addEvent, getEventAttendees, getOrganiserEvents, registerForEvent } from '../controllers/eventController.js';
-import { userAuthMiddleware } from '../middlewares/userAuthMiddleware.js';
+import { organiserOnly, userAuthMiddleware } from '../middlewares/userAuthMiddleware.js';
+import { markAttendance } from '../controllers/attendanceController.js';
 
 
 const router = express.Router();
@@ -16,5 +17,9 @@ router.get('/my-events', userAuthMiddleware, getOrganiserEvents);
 
 // get attendee of events
 router.get('/:id/attendees', userAuthMiddleware, getEventAttendees);
+
+//attendance routes
+router.post("/mark-attendance", userAuthMiddleware, organiserOnly, markAttendance);
+
 
 export default router;
