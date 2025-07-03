@@ -1,4 +1,6 @@
 import mongoose from 'mongoose';
+import slugify from 'slugify';
+
 
 const eventSchema = new mongoose.Schema({
   organiser: {
@@ -34,10 +36,19 @@ const eventSchema = new mongoose.Schema({
       ref: "User"
     }
   ],
+    slug: {
+    type: String,
+    unique: true
+  },
   createdAt: {
     type: Date,
     default: Date.now
   }
+});
+eventSchema.pre("save", function(next) {
+  if (!this.isModified("title")) return next();
+  this.slug = slugify(this.title, { lower: true, strict: true });
+  next();
 });
 
 const Event = mongoose.model("Event", eventSchema);
