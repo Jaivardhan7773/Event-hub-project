@@ -125,3 +125,58 @@ export const getEventAttendees = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+//search and filtet events
+export const searchAndFilterEvents = async (req, res) => {
+  try {
+    const { search, category, organiser, date } = req.query;
+
+    let query = {};
+
+    if (search) {
+      query.$or = [
+        { title: { $regex: search, $options: "i" } },
+        { description: { $regex: search, $options: "i" } }
+      ];
+    }
+
+    if (category) {
+      query.category = category;
+    }
+
+    if (organiser) {
+      query.organiser = organiser;
+    }
+
+    if (date) {
+      query.date = { $gte: new Date(date) }; // upcoming from date
+    }
+
+    const events = await Event.find(query).populate("organiser", "name email");
+
+    res.status(200).json(events);
+
+  } catch (error) {
+    console.log("Error in searchAndFilterEvents:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const getEventBySlug = async (req, res) => {
+  try {
+    const { slug } = req.params;
+
+    const event = await Event.findOne({ slug }).populate("organiser", "name email");
+
+    if (!event) {
+      return res.status(404).json({ message: "Event not found" });
+    }
+
+    res.status(200).json(event);
+
+  } catch (error) {
+    console.log("Error in getEventBySlug:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+

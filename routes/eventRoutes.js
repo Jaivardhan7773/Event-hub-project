@@ -1,5 +1,5 @@
 import express from 'express';
-import { addEvent, getEventAttendees, getOrganiserEvents, registerForEvent } from '../controllers/eventController.js';
+import { addEvent, getEventAttendees, getOrganiserEvents, registerForEvent, searchAndFilterEvents , getEventBySlug  } from '../controllers/eventController.js';
 import { organiserOnly, userAuthMiddleware } from '../middlewares/userAuthMiddleware.js';
 import { markAttendance } from '../controllers/attendanceController.js';
 
@@ -13,13 +13,20 @@ router.post("/add-event", userAuthMiddleware, addEvent)
 router.post('/:id/registerok', userAuthMiddleware, registerForEvent);
 
 // Get all events
-router.get('/my-events', userAuthMiddleware, getOrganiserEvents);
+router.get('/my-events', userAuthMiddleware, organiserOnly, getOrganiserEvents);
 
 // get attendee of events
-router.get('/:id/attendees', userAuthMiddleware, getEventAttendees);
+router.get('/:id/attendees', userAuthMiddleware, organiserOnly , getEventAttendees);
 
 //attendance routes
 router.post("/mark-attendance", userAuthMiddleware, organiserOnly, markAttendance);
+
+
+// Search and filter events
+router.get("/search", searchAndFilterEvents);
+
+
+router.get("/slug/:slug", getEventBySlug);
 
 
 export default router;
