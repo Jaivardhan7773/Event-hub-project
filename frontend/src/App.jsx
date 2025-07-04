@@ -1,5 +1,5 @@
-import { useState , useEffect } from 'react'
-import { Routes, Route , Navigate } from 'react-router-dom'
+import { useState, useEffect, use } from 'react'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import './App.css'
 import Navbar from './Navigation/Navbar'
 import Login from './Auth/Login'
@@ -7,16 +7,23 @@ import SignUp from './Auth/SignUp'
 import Home from './pages/Home'
 import { useAuthStore } from './store/useAuthStore'
 import { Toaster } from 'react-hot-toast'
+import MyEvents from './organiser/MyEvents'
 
 function App() {
-  const [count, setCount] = useState(0)
-const { isCheckingAuth , authUser , checkAuth} =  useAuthStore();
+
+  const { isCheckingAuth, authUser, checkAuth, organiser,  checkOrganiser } = useAuthStore();
   useEffect(() => {
     checkAuth()
   }, [checkAuth]);
-  console.log({authUser})
+  // console.log({authUser})
 
-   if (isCheckingAuth && !authUser) {
+  useEffect(() => {
+    checkOrganiser()
+  }, [checkOrganiser]);
+  console.log(organiser)
+
+
+  if (isCheckingAuth && !authUser) {
     return (
       <div
         style={{
@@ -53,12 +60,13 @@ const { isCheckingAuth , authUser , checkAuth} =  useAuthStore();
   }
   return (
     <>
-      <Navbar/>
+      <Navbar />
 
       <Routes>
         <Route path='/' element={authUser ? <Home /> : <Navigate to={"/login"} />} />
         <Route path='/signup' element={authUser ? <Navigate to='/' /> : <SignUp />} />
         <Route path='/login' element={authUser ? <Navigate to='/' /> : <Login />} />
+        <Route path='/my-events' element={organiser ? <MyEvents/> : <Home/> } />
       </Routes>
       <Toaster />
     </>
