@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import './Navbar.css';
 
 
@@ -74,8 +75,8 @@ const Navbar = () => {
               <span className="dropdown-arrow">▼</span>
             </button>
             <ul className={`dropdown-menu${dropdownOpen ? ' show' : ''}`}>
-              <li><a href="/login" onClick={handleLogin}>Login</a></li>
-              <li><a href="/register" onClick={handleNavLinkClick}>Register</a></li>
+              <li><Link to={"/login"} >Login</Link></li>
+              <li><Link to={"/signup"} onClick={handleNavLinkClick}>Register</Link></li>
             </ul>
           </li>
         )}
