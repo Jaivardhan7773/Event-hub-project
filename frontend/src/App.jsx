@@ -4,6 +4,7 @@ import './App.css'
 import Navbar from './Navigation/Navbar'
 import Login from './Auth/Login'
 import SignUp from './Auth/SignUp'
+import Home from './pages/Home'
 import { useAuthStore } from './store/useAuthStore'
 import { Toaster } from 'react-hot-toast'
 
