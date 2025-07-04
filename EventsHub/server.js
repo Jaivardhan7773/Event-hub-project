@@ -13,19 +13,21 @@ dotenv.config();
 connectDB();
 
 
+
+const app = express(); 
+
+
 app.use(cors({
-    origin: "http://localhost:5173", // Replace with your client URL
+    origin:process.env.CLIENT_URL, // Replace with your client URL
     credentials: true, 
 }))
 
-const app = express(); 
 // hee hee hee
 app.use(cookieParser());
 
 // Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
 app.use(morgan('dev'));
 
 // Test route
