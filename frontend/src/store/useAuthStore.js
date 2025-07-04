@@ -1,7 +1,5 @@
 import { create } from 'zustand';
-
 import toast from 'react-hot-toast';
-
 import { axiosInstance } from '../utils/axios.js';
 
 const BASE_URL = import.meta.env.VITE_API_URL;
@@ -42,8 +40,8 @@ export const useAuthStore = create((set, get) => ({
         }
     },
 
-    login : async (data) => {
-        set({isLoggingIn: true });
+    login: async (data) => {
+        set({ isLoggingIn: true });
         try {
             const response = await axiosInstance.post(`/auth/login`, data);
             set({ authUser: response.data });
@@ -53,8 +51,8 @@ export const useAuthStore = create((set, get) => ({
             console.error("Error logging in:", error);
             const message = error.response?.data?.message || "Failed to login";
             toast.error(message);
-            
-        } finally{
+
+        } finally {
             set({ isLoggingIn: false });
         }
     },
