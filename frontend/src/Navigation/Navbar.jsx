@@ -10,7 +10,7 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
-  const { authUser, logout } = useAuthStore();
+  const { authUser, logout , organiser } = useAuthStore();
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -58,7 +58,13 @@ const Navbar = () => {
       </div>
       <ul className={`nav-links${menuOpen ? ' active' : ''}`}>
         <li><a href="/" onClick={handleNavLinkClick}>Home</a></li>
-        <li><a href="/events" onClick={handleNavLinkClick}>Events</a></li>
+
+
+        {organiser && (
+          <li><Link to={'/my-events'} onClick={handleNavLinkClick}>My Events</Link></li>
+        )}
+        
+        
         <li><a href="/about" onClick={handleNavLinkClick}>About</a></li>
         <li><a href="/contact" onClick={handleNavLinkClick}>Contact</a></li>
         {!authUser && (

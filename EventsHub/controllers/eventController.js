@@ -180,3 +180,7 @@ export const getEventBySlug = async (req, res) => {
   }
 };
 
+
+export const organiserDashboard = (req, res) => {
+  res.json({ message: "Welcome Organiser, this is your dashboard." });
+};

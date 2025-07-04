@@ -1,10 +1,14 @@
 import express from 'express';
-import { addEvent, getEventAttendees, getOrganiserEvents, registerForEvent, searchAndFilterEvents , getEventBySlug  } from '../controllers/eventController.js';
+import { addEvent, getEventAttendees, getOrganiserEvents, registerForEvent, searchAndFilterEvents , getEventBySlug , organiserDashboard } from '../controllers/eventController.js';
 import { organiserOnly, userAuthMiddleware } from '../middlewares/userAuthMiddleware.js';
 import { markAttendance } from '../controllers/attendanceController.js';
 
 
 const router = express.Router();
+
+//to check if the user is an organiser
+router.get("/dashboard",userAuthMiddleware, organiserOnly, organiserDashboard);
+
 //create an event
 router.post("/add-event", userAuthMiddleware, addEvent)
 
