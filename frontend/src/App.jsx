@@ -4,7 +4,9 @@ import './App.css'
 import Navbar from './Navigation/Navbar'
 import Login from './Auth/Login'
 import SignUp from './Auth/SignUp'
+import Home from './pages/Home'
 import { useAuthStore } from './store/useAuthStore'
+import { Toaster } from 'react-hot-toast'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -58,6 +60,7 @@ const { isCheckingAuth , authUser , checkAuth} =  useAuthStore();
         <Route path='/signup' element={authUser ? <Navigate to='/' /> : <SignUp />} />
         <Route path='/login' element={authUser ? <Navigate to='/' /> : <Login />} />
       </Routes>
+      <Toaster />
     </>
   )
 }

@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
+import { useAuthStore } from '../store/useAuthStore';
 
 
 const Navbar = () => {
@@ -9,6 +10,7 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const { authUser, logout } = useAuthStore();
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -41,17 +43,8 @@ const Navbar = () => {
   };
 
   // Simulate login/logout for demo
-  const handleLogin = (e) => {
-    e.preventDefault();
-    setIsLoggedIn(true);
-    setDropdownOpen(false);
-    setMenuOpen(false);
-  };
-  const handleLogout = (e) => {
-    e.preventDefault();
-    setIsLoggedIn(false);
-    setMenuOpen(false);
-  };
+
+
 
   return (
     <nav>
@@ -68,7 +61,7 @@ const Navbar = () => {
         <li><a href="/events" onClick={handleNavLinkClick}>Events</a></li>
         <li><a href="/about" onClick={handleNavLinkClick}>About</a></li>
         <li><a href="/contact" onClick={handleNavLinkClick}>Contact</a></li>
-        {!isLoggedIn && (
+        {!authUser && (
           <li className="dropdown" ref={dropdownRef}>
             <button className="dropdown-toggle" onClick={handleDropdownToggle} aria-haspopup="true" aria-expanded={dropdownOpen}>
               Login / Register
@@ -80,10 +73,13 @@ const Navbar = () => {
             </ul>
           </li>
         )}
-        {isLoggedIn && (
+        {authUser && (
           <>
             <li><a href="/profile" onClick={handleNavLinkClick}>Profile</a></li>
-            <li><a href="/logout" onClick={handleLogout}>Logout</a></li>
+            <li><a  onClick={() => {
+              handleNavLinkClick();
+              logout();
+            }}>Logout</a></li>
           </>
         )}
       </ul>
