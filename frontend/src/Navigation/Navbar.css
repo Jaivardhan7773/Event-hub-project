@@ -82,6 +82,7 @@ nav {
   display: flex;
   align-items: center;
   height: 100%;
+  
 }
 .dropdown-toggle {
   background: none;
@@ -124,6 +125,7 @@ nav {
 }
 .dropdown-menu li {
   width: 100%;
+  list-style: none;
 }
 .dropdown-menu a {
   color: #1e3c72;

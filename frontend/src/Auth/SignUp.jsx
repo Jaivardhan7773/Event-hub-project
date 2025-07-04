@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import './Auth.css';
+import { Link } from 'react-router-dom';
 
 const SignUp = () => {
   const [form, setForm] = useState({ name: '', email: '', password: '' });
@@ -40,7 +41,7 @@ const SignUp = () => {
         <button type="submit" className="auth-btn" disabled={loading}>
           {loading ? 'Signing up...' : 'Sign Up'}
         </button>
-        <p className="auth-switch">Already have an account? <a href="/login">Login</a></p>
+        <p className="auth-switch">Already have an account? <Link to={"/login"}>Login</Link></p>
       </form>
     </div>
   );
