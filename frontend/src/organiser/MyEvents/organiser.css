@@ -1,131 +1,124 @@
 
-/* Sexy, animated, responsive event cards grid */
-
 .events-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 2.2rem;
   padding: 2.5rem 1.5rem;
-  background: linear-gradient(120deg, #0f2027 0%, #2c5364 100%);
+  background: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
   min-height: 80vh;
 }
 
-/* Redesigned glassmorphic card with neon accent and shadow */
-/* Minimal, clean, modern card style with subtle shadow and border */
+/* Redesigned glassmorphic card with neon cyan accent */
 .event-card {
-  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+  background: rgba(22, 31, 45, 0.75);
+  backdrop-filter: blur(10px);
   border-radius: 18px;
-  box-shadow: 0 4px 24px 0 rgba(106, 17, 203, 0.18), 0 1.5px 12px 0 #2575fc33;
+  box-shadow: 0 8px 24px rgba(0, 255, 255, 0.08), 0 4px 12px rgba(0, 255, 255, 0.15);
   padding: 2.2rem 1.7rem 1.7rem 1.7rem;
   display: flex;
   flex-direction: column;
   gap: 1.1rem;
   position: relative;
   animation: cardFadeIn 0.7s cubic-bezier(.68,-0.55,.27,1.55);
-  transition: transform 0.2s, box-shadow 0.2s, border 0.2s, background 0.2s;
-  border: 1.5px solid #a259f7;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border 0.25s ease, background 0.25s ease;
+  border: 1.5px solid rgba(0, 255, 255, 0.4);
   overflow: hidden;
 }
+
 .event-card:hover {
   transform: translateY(-8px) scale(1.03);
-  box-shadow: 0 12px 36px 0 #6a11cb55, 0 2px 16px 0 #2575fc44;
-  border-color: #fff;
-  background: linear-gradient(135deg, #2575fc 0%, #6a11cb 100%);
+  box-shadow: 0 16px 36px rgba(0, 255, 255, 0.2), 0 6px 18px rgba(0, 255, 255, 0.25);
+  border-color: rgba(0, 255, 255, 0.8);
+  background: rgba(22, 31, 45, 0.85);
 }
-.event-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-}
+
 .event-title {
-  font-size: 1.35rem;
+  font-size: 1.4rem;
   font-weight: 800;
-  color: #fff;
+  color: #00ffff;
   margin: 0;
   letter-spacing: 1px;
-  text-shadow: 0 2px 12px #6a11cb55;
+  text-shadow: 0 2px 12px rgba(0, 255, 255, 0.4);
 }
+
 .event-location {
-  background: #fff;
-  color: #6a11cb;
-  font-size: 0.98rem;
+  background: rgba(0, 255, 255, 0.1);
+  color: #00ffff;
+  font-size: 1rem;
   font-weight: 700;
-  padding: 0.3em 0.9em;
+  padding: 0.35em 0.95em;
   border-radius: 8px;
-  box-shadow: 0 2px 8px #a259f733;
-  border: 1.5px solid #a259f7;
+  border: 1.5px solid rgba(0, 255, 255, 0.5);
+  box-shadow: 0 2px 8px rgba(0, 255, 255, 0.2);
 }
+
 .event-desc {
-  color: #fff;
-  font-size: 1.08rem;
+  color: #e0e7ef;
+  font-size: 1.05rem;
   font-weight: 500;
   margin: 0.2rem 0 0.5rem 0;
-  opacity: 0.97;
+  opacity: 0.95;
 }
-.event-info {
-  display: flex;
-  gap: 1.2rem;
-  color: #fff;
-  font-size: 1.01rem;
-  font-weight: 700;
-}
+
+.event-info,
 .event-meta {
   display: flex;
   flex-wrap: wrap;
   gap: 1.2rem;
-  color: #e0e7ef;
+  color: #a7c7e7;
   font-size: 0.98rem;
   font-weight: 500;
   opacity: 0.95;
 }
+
 .event-attendance {
-  color: #a259f7;
+  color: #00ffff;
   font-weight: 700;
 }
+
 .event-actions {
   display: flex;
   gap: 1rem;
   margin-top: 0.7rem;
 }
+
 .event-btn {
-  padding: 0.35em 1em;
-  border-radius: 2.5px;
-  border: 1.5px solid #e0e7ef;
+  padding: 0.4em 1em;
+  border-radius: 4px;
+  border: 1.5px solid #00ffff;
   font-size: 0.98rem;
   font-weight: 700;
-  cursor: not-allowed;
-  opacity: 0.85;
-  background: #f7faff;
-  color: #232526;
-  box-shadow: none;
+  cursor: pointer;
+  background: transparent;
+  color: #00ffff;
   transition: background 0.18s, color 0.18s, border 0.18s, transform 0.18s;
-  outline: none;
 }
+
+.event-btn:hover {
+  background: #00ffff;
+  color: #121212;
+  transform: translateY(-2px);
+}
+
+/* Specific buttons */
 .update-btn {
-  background: #fff;
-  color: #6a11cb;
-  border: 1.5px solid #a259f7;
-  font-weight: 800;
+  border-color: #00ffff;
+  color: #00ffff;
 }
 .update-btn:hover {
-  background: #a259f7;
-  color: #fff;
-  border-color: #fff;
-  opacity: 1;
+  background: #00ffff;
+  color: #121212;
 }
+
 .delete-btn {
-  background: #fff;
-  color: #ef233c;
-  border: 1.5px solid #ef233c;
-  font-weight: 800;
+  border-color: #ff4d4d;
+  color: #ff4d4d;
 }
 .delete-btn:hover {
-  background: #ef233c;
+  background: #ff4d4d;
   color: #fff;
-  border-color: #fff;
-  opacity: 1;
 }
+
 
 /* Skeleton styles */
 /* Skeleton styles */

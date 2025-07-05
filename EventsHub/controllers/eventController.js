@@ -6,9 +6,9 @@ import QRCode from 'qrcode'; // we will use this for QR generation later
 //create an event
 export const addEvent = async (req, res) => {
   try {
-    const { title, description, date, location } = req.body;
+    const { title, description, date, location , textlocation } = req.body;
 
-    if (!title || !description || !date || !location) {
+    if (!title || !description || !date || !location || !textlocation) {
       return res.status(400).json({ message: "All fields are required" });
     }
 
@@ -23,6 +23,7 @@ export const addEvent = async (req, res) => {
       description,
       date,
       location,
+      textlocation ,
     });
 
     res.status(201).json({
