@@ -38,6 +38,7 @@ const MyEvents = () => {
         <div key={event._id} className="event-card">
           <div className="event-header">
             <h2 className="event-title">{event.title}</h2>
+            <span className="event-location">{event.textlocation}</span>
             <span className="event-location">
             {(() => {
               try {

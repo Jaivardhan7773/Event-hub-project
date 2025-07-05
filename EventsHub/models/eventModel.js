@@ -24,6 +24,10 @@ const eventSchema = new mongoose.Schema({
     type: String,
     required: [true, "Event location is required"]
   },
+  textlocation: {
+    type: String,
+    required: [true, "Event text location is required"]
+  },
   attendees: [
     {
       type: mongoose.Schema.Types.ObjectId,
