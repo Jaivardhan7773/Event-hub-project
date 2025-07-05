@@ -6,11 +6,10 @@ import { useAuthStore } from '../store/useAuthStore';
 
 const Navbar = () => {
   // Simulate user authentication state (replace with real auth logic)
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
-  const { authUser, logout , organiser } = useAuthStore();
+  const { authUser, logout, organiser } = useAuthStore();
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -61,10 +60,20 @@ const Navbar = () => {
 
 
         {organiser && (
-          <li><Link to={'/my-events'} onClick={handleNavLinkClick}>My Events</Link></li>
+        <li className="dropdown" ref={dropdownRef}>
+          <button className="dropdown-toggle" onClick={handleDropdownToggle} aria-haspopup="true" aria-expanded={dropdownOpen}>
+            Events
+            <span className="dropdown-arrow">▼</span>
+          </button>
+          <ul className={`dropdown-menu${dropdownOpen ? ' show' : ''}`}>
+        <li><Link to={'/my-events'} onClick={handleNavLinkClick}>My Events</Link></li>
+        <li><Link to={'/add-events'} onClick={handleNavLinkClick}>Add Events</Link></li>
+          </ul>
+        </li>
         )}
-        
-        
+
+
+
         <li><a href="/about" onClick={handleNavLinkClick}>About</a></li>
         <li><a href="/contact" onClick={handleNavLinkClick}>Contact</a></li>
         {!authUser && (
@@ -82,10 +91,10 @@ const Navbar = () => {
         {authUser && (
           <>
             <li><a href="/profile" onClick={handleNavLinkClick}>Profile</a></li>
-            <li><a  onClick={() => {
+            <li><a onClick={() => {
               handleNavLinkClick();
               logout();
-            }}>Logout</a></li>
+            }} style={{ cursor: "pointer" }}>Logout</a></li>
           </>
         )}
       </ul>
