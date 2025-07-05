@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useEventStore } from '../store/useEventStore';
+import { useEventStore } from '../../store/useEventStore';
 import './organiser.css';
 
 const MyEvents = () => {
@@ -15,7 +15,7 @@ const MyEvents = () => {
   if (isLoading) {
     return (
       <div className="events-grid">
-        {[1, 2, 3,4,5,6,7,8,9 ,10,11,12].map((i) => (
+        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((i) => (
           <div className="event-card skeleton" key={i}>
             <div className="skeleton-title"></div>
             <div className="skeleton-desc"></div>
@@ -38,7 +38,26 @@ const MyEvents = () => {
         <div key={event._id} className="event-card">
           <div className="event-header">
             <h2 className="event-title">{event.title}</h2>
-            <span className="event-location">{event.location}</span>
+            <span className="event-location">
+            {(() => {
+              try {
+                const loc = JSON.parse(event.location);
+                return (
+                  <a
+                    href={`https://www.google.com/maps?q=${loc.lat},${loc.lng}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 underline"
+                    style={{ textDecoration: 'none' }}
+                  >
+                    📍 Location
+                  </a>
+                );
+              } catch (error) {
+                return event.location;
+              }
+            })()}</span>
+
           </div>
           <p className="event-desc">{event.description}</p>
           <div className="event-info">

@@ -7,7 +7,8 @@ import SignUp from './Auth/SignUp'
 import Home from './pages/Home'
 import { useAuthStore } from './store/useAuthStore'
 import { Toaster } from 'react-hot-toast'
-import MyEvents from './organiser/MyEvents'
+import MyEvents from './organiser/MyEvents/MyEvents'
+import AddEvents from './organiser/AddEvent/AddEvents'
 
 function App() {
 
@@ -20,7 +21,7 @@ function App() {
   useEffect(() => {
     checkOrganiser()
   }, [checkOrganiser]);
-  console.log(organiser)
+  // console.log(organiser)
 
 
   if (isCheckingAuth && !authUser) {
@@ -66,7 +67,8 @@ function App() {
         <Route path='/' element={authUser ? <Home /> : <Navigate to={"/login"} />} />
         <Route path='/signup' element={authUser ? <Navigate to='/' /> : <SignUp />} />
         <Route path='/login' element={authUser ? <Navigate to='/' /> : <Login />} />
-        <Route path='/my-events' element={organiser ? <MyEvents/> : <Home/> } />
+        <Route path='/my-events' element={organiser ? <MyEvents/> : <Navigate to='/' /> } />
+        <Route path='/add-events' element={organiser ? <AddEvents/> : <Navigate to='/' />}/>
       </Routes>
       <Toaster />
     </>
