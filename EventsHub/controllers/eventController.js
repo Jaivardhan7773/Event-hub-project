@@ -6,7 +6,7 @@ import QRCode from 'qrcode'; // we will use this for QR generation later
 //create an event
 export const addEvent = async (req, res) => {
   try {
-    const { title, description, date, location , textlocation } = req.body;
+    const { title, description, date, location, textlocation } = req.body;
 
     if (!title || !description || !date || !location || !textlocation) {
       return res.status(400).json({ message: "All fields are required" });
@@ -23,7 +23,7 @@ export const addEvent = async (req, res) => {
       description,
       date,
       location,
-      textlocation ,
+      textlocation,
     });
 
     res.status(201).json({
@@ -59,7 +59,7 @@ export const registerForEvent = async (req, res) => {
     await event.save();
 
     // Generate QR Code (for now return a dummy string, integrate QR later)
-   const payload = {
+    const payload = {
       eventId: eventId,
       userId: userId
     };
@@ -79,6 +79,51 @@ export const registerForEvent = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+
+//delete an event
+export const deleteEvent = async (req, res) => {
+  try {
+    const eventId = req.params.id;
+    console.log(eventId)
+    if (!eventId) {
+      return res.status(400).json({ message: "Event ID is required" });
+    }
+    const event = await Event.findByIdAndDelete(eventId);
+    if (!event) {
+      return res.status(404).json({ message: "Event not found" });
+    }
+  } catch (error) {
+    console.log("Error in deleteEvent:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+}
+
+
+//for updating an event
+export const updateEvent = async (req, res) => {
+  try {
+    const eventId = req.params.id;
+    const { title, description, date, location, textlocation } = req.body;
+    const updatedEvent = await Event.findByIdAndUpdate(
+      eventId,
+      { title, description, date, location, textlocation },
+      { new: true }
+    );
+
+    if (!updatedEvent) {
+      return res.status(404).json({ message: "Event not found" });
+    }
+
+    res.status(200).json({
+      message: "Event updated successfully",
+      event: updatedEvent,
+    });
+  } catch (error) {
+    console.log("Error in updateEvent:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+}
 
 
 //get events by organiser id

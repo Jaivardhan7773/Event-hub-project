@@ -33,5 +33,35 @@ export const useEventStore = create((set , get) => ({
             set({isLoading: false});
             get().fetchEvents(); 
         }
+    },
+
+    deleteEvent: async (eventId) => {
+        set({isLoading:true});
+        try {
+            const response = await axiosInstance.delete(`/events/delete-event/${eventId}`);
+            toast.success("Event deleted successfully");
+        } catch (error) {
+            console.error("Error deleting event:", error);
+            const message = error.response?.data?.message || "Failed to delete event";
+            toast.error(message);
+        } finally {
+            set({isLoading: false});
+            get().fetchEvents();
+        }
+    },
+
+    updateEvent: async (eventId , eventData) => {
+        set({isLoading: true});
+        try {
+            const response = await axiosInstance.put(`/events/update-event/${eventId}`, eventData);
+            toast.success("Event updated successfully");
+        } catch (error) {
+            console.error("Error updating event:", error);
+            const message = error.response?.data?.message || "Failed to update event";
+            toast.error(message);
+        } finally {
+            set({isLoading: false});
+            get().fetchEvents();
+        }
     }
 }))
