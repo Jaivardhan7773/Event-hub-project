@@ -1,5 +1,5 @@
 import express from 'express';
-import { addEvent, getEventAttendees, getOrganiserEvents, registerForEvent, searchAndFilterEvents , getEventBySlug , organiserDashboard } from '../controllers/eventController.js';
+import { addEvent, getEventAttendees, getOrganiserEvents, registerForEvent, searchAndFilterEvents , getEventBySlug , organiserDashboard, deleteEvent, updateEvent } from '../controllers/eventController.js';
 import { organiserOnly, userAuthMiddleware } from '../middlewares/userAuthMiddleware.js';
 import { markAttendance } from '../controllers/attendanceController.js';
 
@@ -10,7 +10,7 @@ const router = express.Router();
 router.get("/dashboard",userAuthMiddleware, organiserOnly, organiserDashboard);
 
 //create an event
-router.post("/add-event", userAuthMiddleware, addEvent)
+router.post("/add-event", userAuthMiddleware,organiserOnly, addEvent)
 
 
 // Register for event (student)
@@ -18,6 +18,11 @@ router.post('/:id/registerok', userAuthMiddleware, registerForEvent);
 
 // Get all events
 router.get('/my-events', userAuthMiddleware, organiserOnly, getOrganiserEvents);
+
+//delete an event
+router.delete('/delete-event/:id' , userAuthMiddleware, organiserOnly , deleteEvent )  ;
+
+router.put('/update-event/:id', userAuthMiddleware, organiserOnly, updateEvent); 
 
 // get attendee of events
 router.get('/:id/attendees', userAuthMiddleware, organiserOnly , getEventAttendees);
