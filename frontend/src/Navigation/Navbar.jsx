@@ -56,7 +56,7 @@ const Navbar = () => {
         <span></span>
       </div>
       <ul className={`nav-links${menuOpen ? ' active' : ''}`}>
-        <li><a href="/" onClick={handleNavLinkClick}>Home</a></li>
+        <li><Link to={"/"} onClick={handleNavLinkClick}>Home</Link></li>
 
 
         {organiser && (
@@ -74,7 +74,7 @@ const Navbar = () => {
 
 
 
-        <li><a href="/about" onClick={handleNavLinkClick}>About</a></li>
+        <li><Link to={"/about"} onClick={handleNavLinkClick}>About</Link></li>
         <li><a href="/contact" onClick={handleNavLinkClick}>Contact</a></li>
         {!authUser && (
           <li className="dropdown" ref={dropdownRef}>

@@ -2,6 +2,7 @@ import { useState, useEffect, use } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import './App.css'
 import Navbar from './Navigation/Navbar'
+import About from './pages/About'
 import Login from './Auth/Login'
 import SignUp from './Auth/SignUp'
 import Home from './pages/Home'
@@ -69,6 +70,7 @@ function App() {
         <Route path='/login' element={authUser ? <Navigate to='/' /> : <Login />} />
         <Route path='/my-events' element={organiser ? <MyEvents/> : <Navigate to='/' /> } />
         <Route path='/add-events' element={organiser ? <AddEvents/> : <Navigate to='/' />}/>
+        <Route path='/about' element={<About/>}/>
       </Routes>
       <Toaster />
     </>

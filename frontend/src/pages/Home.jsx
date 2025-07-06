@@ -2,7 +2,11 @@ import React from 'react'
 
 const Home = () => {
   return (
-    <div>Home</div>
+   <>
+   <div className='bg-emerald-950 min-h-screen' style={{height: '100vh'}}>
+
+   </div>
+   </>
   )
 }
 
