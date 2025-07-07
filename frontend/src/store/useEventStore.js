@@ -2,12 +2,27 @@ import { create } from 'zustand';
 import toast from 'react-hot-toast';
 import { axiosInstance } from '../utils/axios.js';
 
-export const useEventStore = create((set , get) => ({
+export const useEventStore = create((set, get) => ({
     events: [],
+    allEvents: [],
     isLoading: false,
 
+    fetchAllEvents: async () => {
+        set({ isLoading: true });
+        try {
+            const response = await axiosInstance.get("/events/get-all-events");
+            set({ allEvents: response.data.events });
+         
+
+        } catch (error) {
+            console.error("Error fetching all events:", error);
+            const message = error.response?.data?.message || "Failed to fetch all events";
+            toast.error(message);
+        }
+    },
+
     fetchEvents: async () => {
-        set({isLoading : true});
+        set({ isLoading: true });
         try {
             const response = await axiosInstance.get("/events/my-events");
             set({ events: response.data.events });
@@ -15,28 +30,28 @@ export const useEventStore = create((set , get) => ({
             console.error("Error fetching events:", error);
             const message = error.response?.data?.message || "Failed to fetch events";
             toast.error(message);
-        } finally{
-            set({isLoading : false});
+        } finally {
+            set({ isLoading: false });
         }
     },
 
     addevent: async (eventData) => {
-        set({isLoading: true});
+        set({ isLoading: true });
         try {
-            const response = await axiosInstance.post("/events/add-event" , eventData);
+            const response = await axiosInstance.post("/events/add-event", eventData);
             toast.success("Event added successfully");
         } catch (error) {
             console.error("Error adding event:", error);
             const message = error.response?.data?.message || "Failed to add event";
             toast.error(message);
-        } finally{
-            set({isLoading: false});
-            get().fetchEvents(); 
+        } finally {
+            set({ isLoading: false });
+            get().fetchEvents();
         }
     },
 
     deleteEvent: async (eventId) => {
-        set({isLoading:true});
+        set({ isLoading: true });
         try {
             const response = await axiosInstance.delete(`/events/delete-event/${eventId}`);
             toast.success("Event deleted successfully");
@@ -45,13 +60,13 @@ export const useEventStore = create((set , get) => ({
             const message = error.response?.data?.message || "Failed to delete event";
             toast.error(message);
         } finally {
-            set({isLoading: false});
+            set({ isLoading: false });
             get().fetchEvents();
         }
     },
 
-    updateEvent: async (eventId , eventData) => {
-        set({isLoading: true});
+    updateEvent: async (eventId, eventData) => {
+        set({ isLoading: true });
         try {
             const response = await axiosInstance.put(`/events/update-event/${eventId}`, eventData);
             toast.success("Event updated successfully");
@@ -60,7 +75,7 @@ export const useEventStore = create((set , get) => ({
             const message = error.response?.data?.message || "Failed to update event";
             toast.error(message);
         } finally {
-            set({isLoading: false});
+            set({ isLoading: false });
             get().fetchEvents();
         }
     }
