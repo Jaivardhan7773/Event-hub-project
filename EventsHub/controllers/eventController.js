@@ -2,6 +2,23 @@ import Event from '../models/eventModel.js';
 import jwt from 'jsonwebtoken';
 import QRCode from 'qrcode'; // we will use this for QR generation later
 
+//get all events
+export const getAllEvents = async (req, res) => {
+  try {
+    const events = await Event.find()
+      .select("_id title date location textlocation slug createdAt organiser")
+      .populate("organiser", "name email")
+      .sort({ date: -1 });
+    res.status(200).json({
+      message: "Fetched all events successfully",
+      events,
+    });
+  } catch (error) {
+    console.log("Error in getAllEvents:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+}
+
 
 //create an event
 export const addEvent = async (req, res) => {
