@@ -1,19 +1,22 @@
 import { useEffect } from 'react'
 import { useEventStore } from '../../store/useEventStore';
 import './Home.css'
+import Carasol from '../../components/carasol/Carasol';
 
 const Home = () => {
-  const { allEvents, fetchAllEvents } = useEventStore();
+  const { allEvents, fetchAllEvents , registerForEvent} = useEventStore();
   useEffect(() => {
     fetchAllEvents()
   }, [fetchAllEvents]);
   // console.log(allEvents);
   return (
     <>
+
+    <Carasol/>
       <div className='container'>
         <div className='eventsrow'>
           {allEvents.map((event) => (
-            <div className="eventcol" id={event._id}>
+            <div className="eventcol" id={event._id} >
               <div className="eventcard">
                 {/* <img src={event.image} alt={event.title} /> */}
                 <h3>{event.title}</h3>
@@ -42,7 +45,7 @@ const Home = () => {
                     return event.location;
                   }
                 })()}</p>
-                <button className='btn'>Join Event</button>
+                <button className='btn' onClick={() => registerForEvent(event._id)}>Join Event</button>
               </div>
             </div>
           ))}

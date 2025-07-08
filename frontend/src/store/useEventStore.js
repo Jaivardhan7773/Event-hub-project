@@ -35,6 +35,21 @@ export const useEventStore = create((set, get) => ({
         }
     },
 
+    registerForEvent: async (eventId) => {
+        set({ isLoading: true });
+        try {
+             const response = await axiosInstance.post(`events/${eventId}/registerok`);
+            toast.success("Successfully registered for the event");
+        } catch (error) {
+            console.error("Error registering for event:", error);
+            const message = error.response?.data?.message || "Failed to register for event";
+            toast.error(message);
+        } finally {
+            set({ isLoading: false });
+            
+        }
+    },
+
     addevent: async (eventData) => {
         set({ isLoading: true });
         try {
