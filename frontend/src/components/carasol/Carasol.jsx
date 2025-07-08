@@ -1,5 +1,5 @@
 import './Carasol.css'
-import { Cake , Users } from 'lucide-react';
+import { Cake , Users , Speech } from 'lucide-react';
 const Carasol = () => {
     return (
         <>
@@ -14,15 +14,15 @@ const Carasol = () => {
                         </p>
                         <div className="achievements">
                             <span className="credits">
-                                <Cake size={24} color="white" />
+                                <Cake size={24} color="white" style={{marginRight:"5px"}}/>
                                 Founded in <br/> 2025
                             </span>
                             <span className="credits">
-                                <Users size={24} color="white" />
+                                <Users size={24} color="white" style={{marginRight:"5px"}}/>
                                 41000+ <br/> Planners
                             </span>
                             <span className="credits">
-                                 <Users size={24} color="white" />
+                                 <Speech size={24} color="white" style={{marginRight:"5px"}} />
                                 1000+ <br/> Team
                             </span>
                         </div>
