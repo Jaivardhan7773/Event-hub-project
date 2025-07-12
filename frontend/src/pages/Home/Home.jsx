@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useEventStore } from '../../store/useEventStore';
 import './Home.css'
 import Carasol from '../../components/carasol/Carasol';
+import Trusted from '../../components/trusted/Trusted';
 
 const Home = () => {
   const { allEvents, fetchAllEvents , registerForEvent} = useEventStore();
@@ -13,6 +14,7 @@ const Home = () => {
     <>
 
     <Carasol/>
+    <Trusted/>
  {
         /*
         <div className='container'>
