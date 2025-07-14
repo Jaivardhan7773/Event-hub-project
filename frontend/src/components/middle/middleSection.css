@@ -1,64 +1,230 @@
-.container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    background-color: beige;
-}
-.row{
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    margin-bottom: 20px;
-}
-.colone{
-    max-width: 50%;
-    flex: 1;
-    margin: 0 10px;
-    padding: 10px;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    text-align:start;
-    transition: transform 0.2s;
-    color: black;
+ * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-}
-.heading{
-    color: black;
-    font-size: 34px;
-}
-.text{
-    color: black;
-    font-size: 15px;
-    line-height: 1.5;
-    margin-top: 10px;
-    font-weight: 400;
-}
-.tags{
-    padding: 20px;
-    list-style:disc;
-}
-.coltwo{
-    max-width: 50%;
-    flex: 1;
-    margin: 0 10px;
-    padding: 10px;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    transition: transform 0.2s;
-}
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+        }
 
-@media screen and (max-width: 768px) {
-    .row {
-        flex-direction: column;
-        align-items: center;
-    }
-    .colone, .coltwo {
-        max-width: 100%;
-        margin: 10px 0;
-    }
-    
-}
+       .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            background-color: rgb(245, 245, 243);
+            width: 100%;
+        }
+
+        .row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            margin-bottom: 20px;
+        }
+
+        .colone {
+            max-width: 50%;
+            flex: 1;
+            margin: 0 10px;
+            background-color: transparent;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: start;
+            transition: transform 0.2s;
+            color: black;
+            padding: 50px;
+        }
+
+        .heading {
+            color: black;
+            font-size: 34px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .text {
+            color: black;
+            font-size: 15px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        .tags {
+            padding: 20px 0;
+            list-style: disc;
+            margin-left: 20px;
+        }
+
+        .tag {
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .coltwo {
+            max-width: 50%;
+            flex: 1;
+            margin: 0 10px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+        }
+
+        .image {
+            max-width: 100%;
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            object-fit: contain;
+        }
+
+        /* Second section */
+        .container-two {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            background-color: rgb(245, 245, 243);
+            /* Removed margin that was causing overlap */
+        }
+
+        .row-two {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            margin-bottom: 20px;
+        }
+
+        .colone-two {
+            flex: 1;
+            max-width: 50%;
+            margin: 0 10px;
+            padding: 50px;
+            background-color: transparent;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: start;
+        }
+
+        .heading-two {
+            color: black;
+            font-size: 34px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .text-two {
+            color: black;
+            font-size: 15px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        .tags-two {
+            padding: 20px 0;
+            list-style: disc;
+            margin-left: 20px;
+        }
+
+        .tags-two li {
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .coltwo-two {
+            flex: 1;
+            max-width: 50%;
+            margin: 0 10px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            .container {
+                padding: 20px 10px;
+            }
+            
+            .container-two {
+                padding: 20px 10px;
+            }
+            
+            .row {
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
+            
+            .row-two {
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
+            
+            .colone, .coltwo {
+                max-width: 100%;
+                margin: 0;
+                width: 100%;
+            }
+            
+            .colone-two, .coltwo-two {
+                flex-basis: 100%;
+                max-width: 100%;
+                margin: 0;
+                width: 100%;
+            }
+            
+            .colone, .colone-two {
+                padding: 30px 20px;
+            }
+            
+            .coltwo, .coltwo-two {
+                padding: 20px;
+                min-height: 300px;
+            }
+            
+            .heading, .heading-two {
+                font-size: 28px;
+            }
+            
+            .text, .text-two {
+                font-size: 14px;
+            }
+            
+            .image {
+                
+                /* max-height: 300px; */
+                /* object-fit: contain; */
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .heading, .heading-two {
+                font-size: 24px;
+            }
+            
+            .colone, .colone-two {
+                padding: 20px 15px;
+            }
+        }
