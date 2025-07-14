@@ -3,6 +3,7 @@ import { useEventStore } from '../../store/useEventStore';
 import './Home.css'
 import Carasol from '../../components/carasol/Carasol';
 import Trusted from '../../components/trusted/Trusted';
+import MiddleSection from '../../components/middle/middleSection';
 
 const Home = () => {
   const { allEvents, fetchAllEvents , registerForEvent} = useEventStore();
@@ -15,6 +16,7 @@ const Home = () => {
 
     <Carasol/>
     <Trusted/>
+    <MiddleSection/>
  {
         /*
         <div className='container'>
