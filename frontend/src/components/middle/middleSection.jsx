@@ -3,7 +3,7 @@ import './middleSection.css';
 const MiddleSection = () => {
   return (
     <>
-    <h1 className='text-amber-700'>phwe</h1>
+    {/* <h1 className='text-amber-700'>phwe</h1> */}
     <div className="container">
         <div className="row">
             <div className="colone">
@@ -33,6 +33,32 @@ const MiddleSection = () => {
             </div>
         </div>
     </div>
+ {/* <h1>EventMobi Makes Engaging Events Easy — Even For Small Teams</h1> */}
+
+<div className="container-two">
+    <div className="row-two">
+        <div className="coltwo-two">
+            <img src="https://www.eventmobi.com/wp-content/uploads/2025/06/EventMobi_Roadmap_2025-1024x760.png.webp" alt="Event Management" className="image"/>
+        </div>
+        <div className="colone-two">
+            <h1 className="heading-two">
+                Everything You Need. Nothing You Don’t.
+            </h1>
+            <p className="text-two">
+                You’re never locked in. Choose just the modules you want for any event type...
+            </p>
+            <ul className="tags-two">
+                <li>Use tools for every stage of the event lifecycle</li>
+                <li>Create custom registration forms</li>
+                <li>Manage multiple ticket types</li>
+                <li>Create custom agendas</li>
+                <li>Track attendee engagement</li>
+                <li>Use tools for every stage of the event lifecycle</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
     </>
   )
 }
