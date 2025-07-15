@@ -7,9 +7,9 @@ import MiddleSection from '../../components/middle/middleSection';
 
 const Home = () => {
   const { allEvents, fetchAllEvents , registerForEvent} = useEventStore();
-  useEffect(() => {
-    fetchAllEvents()
-  }, [fetchAllEvents]);
+  // useEffect(() => {
+  //   fetchAllEvents()
+  // }, [fetchAllEvents]);
   // console.log(allEvents);
   return (
     <>
@@ -17,6 +17,7 @@ const Home = () => {
     <Carasol/>
     <Trusted/>
     <MiddleSection/>
+    
  {
         /*
         <div className='container'>
@@ -62,4 +63,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Home;
