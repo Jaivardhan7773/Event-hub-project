@@ -7,9 +7,9 @@ import MiddleSection from '../../components/middle/middleSection';
 
 const Home = () => {
   const { allEvents, fetchAllEvents , registerForEvent} = useEventStore();
-  // useEffect(() => {
-  //   fetchAllEvents()
-  // }, [fetchAllEvents]);
+  useEffect(() => {
+    fetchAllEvents()
+  }, [fetchAllEvents]);
   // console.log(allEvents);
   return (
     <>
@@ -18,8 +18,7 @@ const Home = () => {
     <Trusted/>
     <MiddleSection/>
     
- {
-        /*
+
         <div className='container'>
           <div className='eventsrow'>
             {allEvents.map((event) => (
@@ -57,8 +56,7 @@ const Home = () => {
             ))}
           </div>
         </div>
-        */
-      }
+      
     </>
   )
 }
