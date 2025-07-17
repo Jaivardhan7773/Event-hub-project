@@ -13,6 +13,8 @@ dotenv.config();
 connectDB();
 
 
+// console.log("api key is 🤣🔥🔥 " + process.env.CLOUDINARY_API_KEY);
+
 
 const app = express(); 
 
@@ -40,7 +42,7 @@ app.use('/api/events' , eventRoutes)
 
 
 const PORT = process.env.PORT || 5000;
-
+//  console.log(PORT)
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT} 🚀`);
 });
