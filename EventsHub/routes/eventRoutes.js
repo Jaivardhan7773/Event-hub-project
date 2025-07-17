@@ -1,4 +1,5 @@
 import express from 'express';
+import upload from "../middlewares/upload.js";
 import { addEvent, getEventAttendees, getOrganiserEvents, registerForEvent, searchAndFilterEvents , getEventBySlug , organiserDashboard, deleteEvent, updateEvent, getAllEvents } from '../controllers/eventController.js';
 import { organiserOnly, userAuthMiddleware } from '../middlewares/userAuthMiddleware.js';
 import { markAttendance } from '../controllers/attendanceController.js';
@@ -9,10 +10,10 @@ const router = express.Router();
 router.get("/get-all-events" , getAllEvents);
 
 //to check if the user is an organiser
-router.get("/dashboard",userAuthMiddleware, organiserOnly, organiserDashboard);
+router.get("/dashboard",userAuthMiddleware, organiserOnly,  organiserDashboard);
 
 //create an event
-router.post("/add-event", userAuthMiddleware,organiserOnly, addEvent)
+router.post("/add-event", userAuthMiddleware,organiserOnly,upload.array("photos", 5), addEvent)
 
 
 // Register for event (student)

@@ -5,7 +5,6 @@ import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
-// Fix marker icon issue in Leaflet + React
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
     iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
@@ -28,9 +27,7 @@ const LocationPicker = ({ setLocation }) => {
 
     return (
         <MapContainer center={[20.5937, 78.9629]} zoom={4} style={{ height: '300px', width: '100%' }}>
-            <TileLayer
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
+            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
             <MapClickHandler />
         </MapContainer>
     );
@@ -42,12 +39,17 @@ const AddEvents = () => {
         title: '',
         description: '',
         date: '',
-        location: '' ,// This will store lat/lng object
-        textlocation: ''
+        location: '',
+        textlocation: '',
     });
+    const [images, setImages] = useState([]);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const handleImageChange = (e) => {
+        setImages(Array.from(e.target.files));
     };
 
     const handleSubmit = async (e) => {
@@ -57,55 +59,58 @@ const AddEvents = () => {
             return;
         }
 
-        // You can stringify location if needed before saving
-        await addevent({
-            ...formData,
-            location: JSON.stringify(formData.location)
+        const data = new FormData();
+        data.append("title", formData.title);
+        data.append("description", formData.description);
+        data.append("date", formData.date);
+        data.append("textlocation", formData.textlocation);
+        data.append("location", JSON.stringify(formData.location)); // stringify latlng
+
+        images.forEach((image) => {
+            data.append("photos", image);
         });
 
-        setFormData({
-            title: '',
-            description: '',
-            date: '',
-            location: '' ,
-            textlocation: ''
-        });
+
+        await addevent(data);
+
+        // setFormData({
+        //     title: '',
+        //     description: '',
+        //     date: '',
+        //     location: '',
+        //     textlocation: '',
+        // });
+        // setImages([]);
     };
 
     return (
         <div className="max-w-md mx-auto p-4 border rounded shadow">
             <h2 className="text-2xl font-bold mb-4">Add Event</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
-                <input
-                    type="text"
-                    name="title"
-                    placeholder="Event Title"
-                    value={formData.title}
-                    onChange={handleChange}
-                    className="w-full border px-3 py-2 rounded"
-                />
-                <textarea
-                    name="description"
-                    placeholder="Event Description"
-                    value={formData.description}
-                    onChange={handleChange}
-                    className="w-full border px-3 py-2 rounded"
-                ></textarea>
-                <input
-                    type="datetime-local"
-                    name="date"
-                    value={formData.date}
-                    onChange={handleChange}
-                    className="w-full border px-3 py-2 rounded"
-                />
-                <input
-                    type="text"
-                    name="textlocation"
-                    placeholder="Event Location (Text)"
-                    value={formData.textlocation}
-                    onChange={handleChange}
-                    className="w-full border px-3 py-2 rounded"
-                />
+                <input type="text" name="title" placeholder="Event Title" value={formData.title} onChange={handleChange} className="w-full border px-3 py-2 rounded" />
+
+                <textarea name="description" placeholder="Event Description" value={formData.description} onChange={handleChange} className="w-full border px-3 py-2 rounded"></textarea>
+                <div>
+                    <label className="block mb-1 font-medium">Upload Event Images</label>
+                   <input type="file" multiple accept="image/*" onChange={handleImageChange} name="photos" />
+
+                </div>
+
+                {/* Image preview */}
+                <div className="flex flex-wrap gap-2">
+                    {images.map((img, idx) => (
+                        <img
+                            key={idx}
+                            src={URL.createObjectURL(img)}
+                            alt={`preview ${idx}`}
+                            className="w-20 h-20 object-cover rounded border"
+                        />
+                    ))}
+                </div>
+
+                <input type="datetime-local" name="date" value={formData.date} onChange={handleChange} className="w-full border px-3 py-2 rounded" />
+
+                <input type="text" name="textlocation" placeholder="Event Location (Text)" value={formData.textlocation} onChange={handleChange} className="w-full border px-3 py-2 rounded" />
 
                 <div>
                     <label className="block mb-1 font-medium">Select Location on Map</label>
@@ -114,11 +119,8 @@ const AddEvents = () => {
                     }} />
                 </div>
 
-                <button
-                    type="submit"
-                    disabled={isLoading}
-                    className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:bg-gray-400"
-                >
+
+                <button type="submit" disabled={isLoading} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:bg-gray-400">
                     {isLoading ? "Adding..." : "Add Event"}
                 </button>
             </form>

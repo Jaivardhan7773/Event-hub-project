@@ -11,6 +11,11 @@ const eventSchema = new mongoose.Schema({
   title: {
     type: String,
     required: [true, "Event title is required"]
+     
+  },
+  photos: {
+    type: String,
+    required: [true, "Event photos are required"]
   },
   description: {
     type: String,
@@ -40,7 +45,7 @@ const eventSchema = new mongoose.Schema({
       ref: "User"
     }
   ],
-    slug: {
+  slug: {
     type: String,
     unique: true
   },
@@ -49,7 +54,7 @@ const eventSchema = new mongoose.Schema({
     default: Date.now
   }
 });
-eventSchema.pre("save", function(next) {
+eventSchema.pre("save", function (next) {
   if (!this.isModified("title")) return next();
   this.slug = slugify(this.title, { lower: true, strict: true });
   next();
