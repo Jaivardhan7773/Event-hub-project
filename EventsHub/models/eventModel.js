@@ -13,10 +13,10 @@ const eventSchema = new mongoose.Schema({
     required: [true, "Event title is required"]
      
   },
-  photos: {
-    type: String,
-    required: [true, "Event photos are required"]
-  },
+  // photos: {
+  //   type: String,
+  //   required: [true, "Event photos are required"]
+  // },
   description: {
     type: String,
     required: [true, "Event description is required"]

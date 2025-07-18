@@ -50,20 +50,20 @@ export const useEventStore = create((set, get) => ({
         }
     },
 
-    addevent: async (eventData) => {
-        set({ isLoading: true });
-        try {
-            const response = await axiosInstance.post("/events/add-event", eventData);
-            toast.success("Event added successfully");
-        } catch (error) {
-            console.error("Error adding event:", error);
-            const message = error.response?.data?.message || "Failed to add event";
-            toast.error(message);
-        } finally {
-            set({ isLoading: false });
-            get().fetchEvents();
-        }
-    },
+        addevent: async (eventData) => {
+            set({ isLoading: true });
+            try {
+                const response = await axiosInstance.post("/events/add-event", eventData);
+                toast.success("Event added successfully");
+            } catch (error) {
+                console.error("Error adding event:", error);
+                const message = error.response?.data?.message || "Failed to add event";
+                toast.error(message);
+            } finally {
+                set({ isLoading: false });
+                get().fetchEvents();
+            }
+        },
 
     deleteEvent: async (eventId) => {
         set({ isLoading: true });

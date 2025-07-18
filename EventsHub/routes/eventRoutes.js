@@ -13,7 +13,7 @@ router.get("/get-all-events" , getAllEvents);
 router.get("/dashboard",userAuthMiddleware, organiserOnly,  organiserDashboard);
 
 //create an event
-router.post("/add-event", userAuthMiddleware,organiserOnly,upload.array("photos", 5), addEvent)
+router.post("/add-event", userAuthMiddleware,organiserOnly, addEvent)
 
 
 // Register for event (student)
