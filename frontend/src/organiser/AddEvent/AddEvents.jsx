@@ -42,14 +42,9 @@ const AddEvents = () => {
         location: '',
         textlocation: '',
     });
-    const [images, setImages] = useState([]);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
-
-    const handleImageChange = (e) => {
-        setImages(Array.from(e.target.files));
     };
 
     const handleSubmit = async (e) => {
@@ -59,20 +54,17 @@ const AddEvents = () => {
             return;
         }
 
-        const data = new FormData();
-        data.append("title", formData.title);
-        data.append("description", formData.description);
-        data.append("date", formData.date);
-        data.append("textlocation", formData.textlocation);
-        data.append("location", JSON.stringify(formData.location)); // stringify latlng
-
-        images.forEach((image) => {
-            data.append("photos", image);
-        });
-
+        const data = {
+            title: formData.title,
+            description: formData.description,
+            date: formData.date,
+            textlocation: formData.textlocation,
+            location: formData.location,
+        };
 
         await addevent(data);
 
+        // Optional reset
         // setFormData({
         //     title: '',
         //     description: '',
@@ -80,7 +72,6 @@ const AddEvents = () => {
         //     location: '',
         //     textlocation: '',
         // });
-        // setImages([]);
     };
 
     return (
@@ -90,23 +81,6 @@ const AddEvents = () => {
                 <input type="text" name="title" placeholder="Event Title" value={formData.title} onChange={handleChange} className="w-full border px-3 py-2 rounded" />
 
                 <textarea name="description" placeholder="Event Description" value={formData.description} onChange={handleChange} className="w-full border px-3 py-2 rounded"></textarea>
-                <div>
-                    <label className="block mb-1 font-medium">Upload Event Images</label>
-                   <input type="file" multiple accept="image/*" onChange={handleImageChange} name="photos" />
-
-                </div>
-
-                {/* Image preview */}
-                <div className="flex flex-wrap gap-2">
-                    {images.map((img, idx) => (
-                        <img
-                            key={idx}
-                            src={URL.createObjectURL(img)}
-                            alt={`preview ${idx}`}
-                            className="w-20 h-20 object-cover rounded border"
-                        />
-                    ))}
-                </div>
 
                 <input type="datetime-local" name="date" value={formData.date} onChange={handleChange} className="w-full border px-3 py-2 rounded" />
 
@@ -115,10 +89,12 @@ const AddEvents = () => {
                 <div>
                     <label className="block mb-1 font-medium">Select Location on Map</label>
                     <LocationPicker setLocation={(latlng) => {
-                        setFormData({ ...formData, location: latlng });
+                        const locationString = JSON.stringify(latlng); // convert object to string
+                        setFormData({ ...formData, location: locationString });
                     }} />
-                </div>
 
+
+                </div>
 
                 <button type="submit" disabled={isLoading} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:bg-gray-400">
                     {isLoading ? "Adding..." : "Add Event"}

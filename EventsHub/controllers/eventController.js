@@ -33,7 +33,6 @@ export const addEvent = async (req, res) => {
     if (req.user.role !== "organiser") {
       return res.status(403).json({ message: "Only organisers can create events" });
     }
-    const photos = req.files.map((file) => file.path);
 
     const newEvent = await Event.create({
       organiser: req.user._id,
@@ -42,7 +41,6 @@ export const addEvent = async (req, res) => {
       date,
       location,
       textlocation,
-      photos,
     });
 
     res.status(201).json({
