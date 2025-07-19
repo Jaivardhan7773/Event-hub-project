@@ -10,6 +10,7 @@ import { useAuthStore } from './store/useAuthStore'
 import { Toaster } from 'react-hot-toast'
 import MyEvents from './organiser/MyEvents/MyEvents'
 import AddEvents from './organiser/AddEvent/AddEvents'
+import Profile from './pages/profile/Profile'
 
 function App() {
 
@@ -70,6 +71,7 @@ function App() {
         <Route path='/login' element={authUser ? <Navigate to='/' /> : <Login />} />
         <Route path='/my-events' element={organiser ? <MyEvents/> : <Navigate to='/' /> } />
         <Route path='/add-events' element={organiser ? <AddEvents/> : <Navigate to='/' />}/>
+        <Route path='/profile' element={authUser ? <Profile/> : <Navigate to='/' />}/>
         <Route path='/about' element={<About/>}/>
       </Routes>
       <Toaster />
