@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 import { useAuthStore } from '../store/useAuthStore';
+import { useEventStore } from '../store/useEventStore';
 
 
 const Navbar = () => {
@@ -10,7 +11,12 @@ const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const { authUser, logout, organiser } = useAuthStore();
-
+    const [searchInput, setSearchInput] = useState("");
+  const { searchEvents, isLoading, events } = useEventStore();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    searchEvents(searchInput);
+  };
   // Close dropdown on outside click
   useEffect(() => {
     function handleClickOutside(event) {
@@ -90,7 +96,7 @@ const Navbar = () => {
         )}
         {authUser && (
           <>
-            <li><a href="/profile" onClick={handleNavLinkClick}>Profile</a></li>
+            <li><Link to={"/profile"} onClick={handleNavLinkClick}>Profile</Link></li>
             <li><a onClick={() => {
               handleNavLinkClick();
               logout();
@@ -99,8 +105,17 @@ const Navbar = () => {
         )}
       </ul>
       <div className="search-bar">
-        <input type="text" placeholder="Search events..." />
+       <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="Search events..."
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
+        />
         <button type="submit">Search</button>
+      </form>
+
+
       </div>
     </nav>
   );

@@ -12,7 +12,7 @@ export const useEventStore = create((set, get) => ({
         try {
             const response = await axiosInstance.get("/events/get-all-events");
             set({ allEvents: response.data.events });
-         
+
 
         } catch (error) {
             console.error("Error fetching all events:", error);
@@ -38,7 +38,7 @@ export const useEventStore = create((set, get) => ({
     registerForEvent: async (eventId) => {
         set({ isLoading: true });
         try {
-             const response = await axiosInstance.post(`events/${eventId}/registerok`);
+            const response = await axiosInstance.post(`events/${eventId}/registerok`);
             toast.success("Successfully registered for the event");
         } catch (error) {
             console.error("Error registering for event:", error);
@@ -46,24 +46,24 @@ export const useEventStore = create((set, get) => ({
             toast.error(message);
         } finally {
             set({ isLoading: false });
-            
+
         }
     },
 
-        addevent: async (eventData) => {
-            set({ isLoading: true });
-            try {
-                const response = await axiosInstance.post("/events/add-event", eventData);
-                toast.success("Event added successfully");
-            } catch (error) {
-                console.error("Error adding event:", error);
-                const message = error.response?.data?.message || "Failed to add event";
-                toast.error(message);
-            } finally {
-                set({ isLoading: false });
-                get().fetchEvents();
-            }
-        },
+    addevent: async (eventData) => {
+        set({ isLoading: true });
+        try {
+            const response = await axiosInstance.post("/events/add-event", eventData);
+            toast.success("Event added successfully");
+        } catch (error) {
+            console.error("Error adding event:", error);
+            const message = error.response?.data?.message || "Failed to add event";
+            toast.error(message);
+        } finally {
+            set({ isLoading: false });
+            get().fetchEvents();
+        }
+    },
 
     deleteEvent: async (eventId) => {
         set({ isLoading: true });
@@ -93,5 +93,23 @@ export const useEventStore = create((set, get) => ({
             set({ isLoading: false });
             get().fetchEvents();
         }
-    }
+    },
+    searchEvents: async (searchQuery) => {
+        set({ isLoading: true });
+        try {
+            const response = await axiosInstance.get("/events/search", {
+                params: {
+                    search: searchQuery,
+                    // add category, organiser, date if needed
+                },
+            });
+            set({ events: response.data }); // or response.data.events if your backend sends { events: [...] }
+        } catch (error) {
+            console.error("Error searching events:", error);
+            const message = error.response?.data?.message || "Failed to search events";
+            toast.error(message);
+        } finally {
+            set({ isLoading: false });
+        }
+    },
 }))
