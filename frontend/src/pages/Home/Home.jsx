@@ -19,7 +19,7 @@ const Home = () => {
     <MiddleSection/>
     
 
-        {/* <div className='container'>
+        <div className='container'>
           <div className='eventsrow'>
             {allEvents.map((event) => (
               <div className="eventcol" id={event._id} >
@@ -56,7 +56,7 @@ const Home = () => {
             ))}
           </div>
         </div>
-       */}
+      
     </>
   )
 }
