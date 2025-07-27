@@ -50,7 +50,9 @@ const Home = () => {
                       return event.location;
                     }
                   })()}</p>
-                  <button className='btn' onClick={() => registerForEvent(event._id)}>Join Event</button>
+                  <button className='btn' onClick={() => registerForEvent(event._id)}>
+                    Join Event
+                    </button>
                 </div>
               </div>
             ))}
