@@ -53,7 +53,9 @@ export const useEventStore = create((set, get) => ({
     addevent: async (eventData) => {
         set({ isLoading: true });
         try {
-            const response = await axiosInstance.post("/events/add-event", eventData);
+            const response = await axiosInstance.post("/events/add-event", eventData, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            });
             toast.success("Event added successfully");
         } catch (error) {
             console.error("Error adding event:", error);
@@ -70,13 +72,14 @@ export const useEventStore = create((set, get) => ({
         try {
             const response = await axiosInstance.delete(`/events/delete-event/${eventId}`);
             toast.success("Event deleted successfully");
+            set({ isLoading: false });
         } catch (error) {
             console.error("Error deleting event:", error);
             const message = error.response?.data?.message || "Failed to delete event";
             toast.error(message);
         } finally {
+            // get().fetchEvents();
             set({ isLoading: false });
-            get().fetchEvents();
         }
     },
 

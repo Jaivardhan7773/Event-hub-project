@@ -23,30 +23,21 @@ export const getAllEvents = async (req, res) => {
 //create an event
 export const addEvent = async (req, res) => {
   try {
+    console.log("About to create a new event")
     const { title, description, date, location, textlocation } = req.body;
 
     if (!title || !description || !date || !location || !textlocation) {
       return res.status(400).json({ message: "All fields are required" });
     }
 
-
-
-    // Check if user is an organiser
-    // if (req.user.role !== "organiser") {
-    //   return res.status(403).json({ message: "Only organisers can create events" });
-    // }
-
-        if (!req.file) {
-      return res.status(400).json({ message: "Image is required" });
+    if (!req.file || !req.file.path) {
+      return res.status(400).json({ message: "Image us required too" });
     }
 
-    // 🔥 Fixed: Upload with resource_type "auto"
-    const result = await cloudinary.uploader.upload(req.file.path, {
-      folder: "events",
-      resource_type: "auto", // ✅ Critical
-    });
-
-    fs.unlinkSync(req.file.path)
+    // Check if user is an organiser
+    if (req.user.role !== "organiser") {
+      return res.status(403).json({ message: "Only organisers can create events" });
+    }
 
     const newEvent = await Event.create({
       organiser: req.user._id,
