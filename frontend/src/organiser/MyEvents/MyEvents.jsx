@@ -43,6 +43,7 @@ const MyEvents = () => {
         {events.map((event) => (
           <div key={event._id} className="event-card">
             <div className="event-header">
+              <img src={event.image} alt={event.title} />
               <h2 className="event-title">{event.title}</h2>
               <span className="event-location">{event.textlocation}</span>
               <span className="event-location">

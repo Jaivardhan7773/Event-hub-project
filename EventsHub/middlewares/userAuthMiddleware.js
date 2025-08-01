@@ -7,6 +7,7 @@ export const userAuthMiddleware = async (req, res, next) => {
     try {
         // console.log("Cookies: ", req.cookies);
         // console.log("Token: ", req.cookies.jwt);
+        console.log("userAuthMiddleware called");
         const token = req.cookies.token
         if (!token) {
             return res.status(401).json({
@@ -29,6 +30,7 @@ export const userAuthMiddleware = async (req, res, next) => {
             })
         }
         req.user = user
+        console.log("userAuthMiddleware has done ");
         next();
     } catch (error) {
         console.log("error in userAuthMiddleware");
@@ -39,7 +41,9 @@ export const userAuthMiddleware = async (req, res, next) => {
 }
 
 export const organiserOnly = (req, res, next) => {
+    console.log("organiserOnly called");
   if (req.user && req.user.role === "organiser") {
+    console.log("organiserOnly done");
     next();
   } else {
     res.status(401).json({ message: "Not authorised as organiser" });

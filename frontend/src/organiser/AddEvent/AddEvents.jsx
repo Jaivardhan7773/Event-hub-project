@@ -43,36 +43,40 @@ const AddEvents = () => {
         textlocation: '',
     });
 
+
+    const [imageFile, setImageFile] = useState(null);
+
+
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    const handleImageChange = (e) => {
+        if (e.target.files && e.target.files[0]) {
+            setImageFile(e.target.files[0]);
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!formData.title || !formData.description || !formData.date || !formData.location || !formData.textlocation) {
+
+        if (!formData.title || !formData.description || !formData.date || !formData.location || !formData.textlocation || !imageFile) {
             alert("Please fill in all fields");
             return;
         }
 
-        const data = {
-            title: formData.title,
-            description: formData.description,
-            date: formData.date,
-            textlocation: formData.textlocation,
-            location: formData.location,
-        };
+        const formPayload = new FormData();
+        formPayload.append('title', formData.title);
+        formPayload.append('description', formData.description);
+        formPayload.append('date', formData.date);
+        formPayload.append('textlocation', formData.textlocation);
+        formPayload.append('location', formData.location);
+        formPayload.append('image', imageFile);
 
-        await addevent(data);
-
-        // Optional reset
-        // setFormData({
-        //     title: '',
-        //     description: '',
-        //     date: '',
-        //     location: '',
-        //     textlocation: '',
-        // });
+        await addevent(formPayload);
+        setImageFile(null);
     };
+
 
     return (
         <div className="max-w-md mx-auto p-4 border rounded shadow">
@@ -94,6 +98,19 @@ const AddEvents = () => {
                     }} />
 
 
+                </div>
+                <div>
+                    <label className="block mb-1 font-medium" htmlFor="image">
+                        Event Image
+                    </label>
+                    <input
+                        type="file"
+                        id="image"
+                        accept="image/*"
+                        onChange={handleImageChange}
+                        className="w-full border px-3 py-2 rounded"
+                    />
+                    {imageFile && <p>Selected file: {imageFile.name}</p>}
                 </div>
 
                 <button type="submit" disabled={isLoading} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:bg-gray-400">
